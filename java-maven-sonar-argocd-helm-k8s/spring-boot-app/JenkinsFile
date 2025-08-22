@@ -82,5 +82,20 @@ pipeline {
         }
       }
     }
+
+    stage('Cleanup') {
+      steps {
+        sh '''
+          echo "Cleaning up Docker resources..."
+          docker system prune -af --volumes || true
+        '''
+      }
+    }
+  }
+
+  post {
+    always {
+      echo 'Pipeline finished. ✅'
+    }
   }
 }
